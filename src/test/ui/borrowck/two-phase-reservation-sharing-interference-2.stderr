@@ -1,14 +1,14 @@
-error: compilation successful
-  --> $DIR/two-phase-reservation-sharing-interference-2.rs:17:1
+error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immutable
+  --> $DIR/two-phase-reservation-sharing-interference-2.rs:10:5
    |
-LL | / fn main() { //~ ERROR compilation successful
-LL | |     let mut v = vec![0, 1, 2];
-LL | |     let shared = &v;
-LL | |
-...  |
-LL | |     assert_eq!(v, [0, 1, 2, 3]);
-LL | | }
-   | |_^
+LL |     let shared = &v;
+   |                  -- immutable borrow occurs here
+LL | 
+LL |     v.push(shared.len()); //~ ERROR cannot borrow `v` as mutable
+   |     ^      ------ immutable borrow later used here
+   |     |
+   |     mutable borrow occurs here
 
 error: aborting due to previous error
 
+For more information about this error, try `rustc --explain E0502`.
