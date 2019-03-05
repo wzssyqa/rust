@@ -997,8 +997,8 @@ impl<'cx, 'gcx, 'tcx> MirBorrowckCtxt<'cx, 'gcx, 'tcx> {
                     Control::Continue
                 }
 
-                (Read(_), BorrowKind::Shared) | (Reservation(..), BorrowKind::Shared)
-                | (Read(_), BorrowKind::Shallow) | (Reservation(..), BorrowKind::Shallow)
+                (Read(_), BorrowKind::Shared)
+                | (Read(_), BorrowKind::Shallow)
                 | (Read(ReadKind::Borrow(BorrowKind::Shallow)), BorrowKind::Unique)
                 | (Read(ReadKind::Borrow(BorrowKind::Shallow)), BorrowKind::Mut { .. }) => {
                     Control::Continue
@@ -1028,8 +1028,7 @@ impl<'cx, 'gcx, 'tcx> MirBorrowckCtxt<'cx, 'gcx, 'tcx> {
                     Control::Break
                 }
 
-                (Reservation(kind), BorrowKind::Unique)
-                | (Reservation(kind), BorrowKind::Mut { .. })
+                (Reservation(kind), _)
                 | (Activation(kind, _), _)
                 | (Write(kind), _) => {
                     match rw {
